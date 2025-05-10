@@ -1,0 +1,152 @@
+﻿<Window x:Class="WordleTrainer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WordleTrainer"
+        mc:Ignorable="d"
+        Title="WordleTrainer" Height="600" Width="800" ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style x:Key="LetterBoxStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Width" Value="60" />
+            <Setter Property="Height" Value="60" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontSize" Value="40" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="MaxLength" Value="1" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="FontFamily" Value="Arial" />
+        </Style>
+        <Style x:Key="LabelBoxStyle" TargetType="{x:Type Label}">
+            <Setter Property="Width" Value="60" />
+            <Setter Property="Height" Value="60" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontSize" Value="40" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="FontFamily" Value="Arial" />
+        </Style>
+        <Style x:Key="GuessedLetterStyle" TargetType="{x:Type Label}">
+            <Setter Property="Width" Value="30" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="BorderBrush" Value="DarkGray" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Background" Value="DarkGray" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontFamily" Value="Arial" />
+        </Style>
+        <Style x:Key="KeyboardLetterStyle" TargetType="{x:Type Label}">
+            <Setter Property="Width" Value="30" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="BorderBrush" Value="Gray" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Background" Value="LightGray" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontFamily" Value="Arial" />
+        </Style>
+    </Window.Resources>
+
+    <Grid x:Name="WordleGrid" >
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBox x:Name="Attempt1Letter1" Grid.Row="0" Grid.Column="0" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt1Letter2" Grid.Row="0" Grid.Column="1" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt1Letter3" Grid.Row="0" Grid.Column="2" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt1Letter4" Grid.Row="0" Grid.Column="3" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt1Letter5" Grid.Row="0" Grid.Column="4" Style="{StaticResource LetterBoxStyle}" />
+
+        <TextBox x:Name="Attempt2Letter1" Grid.Row="1" Grid.Column="0" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt2Letter2" Grid.Row="1" Grid.Column="1" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt2Letter3" Grid.Row="1" Grid.Column="2" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt2Letter4" Grid.Row="1" Grid.Column="3" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt2Letter5" Grid.Row="1" Grid.Column="4" Style="{StaticResource LetterBoxStyle}" />
+
+        <TextBox x:Name="Attempt3Letter1" Grid.Row="2" Grid.Column="0" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt3Letter2" Grid.Row="2" Grid.Column="1" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt3Letter3" Grid.Row="2" Grid.Column="2" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt3Letter4" Grid.Row="2" Grid.Column="3" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt3Letter5" Grid.Row="2" Grid.Column="4" Style="{StaticResource LetterBoxStyle}" />
+
+        <TextBox x:Name="Attempt4Letter1" Grid.Row="3" Grid.Column="0" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt4Letter2" Grid.Row="3" Grid.Column="1" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt4Letter3" Grid.Row="3" Grid.Column="2" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt4Letter4" Grid.Row="3" Grid.Column="3" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt4Letter5" Grid.Row="3" Grid.Column="4" Style="{StaticResource LetterBoxStyle}" />
+
+        <TextBox x:Name="Attempt5Letter1" Grid.Row="4" Grid.Column="0" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt5Letter2" Grid.Row="4" Grid.Column="1" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt5Letter3" Grid.Row="4" Grid.Column="2" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt5Letter4" Grid.Row="4" Grid.Column="3" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt5Letter5" Grid.Row="4" Grid.Column="4" Style="{StaticResource LetterBoxStyle}" />
+
+        <TextBox x:Name="Attempt6Letter1" Grid.Row="5" Grid.Column="0" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt6Letter2" Grid.Row="5" Grid.Column="1" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt6Letter3" Grid.Row="5" Grid.Column="2" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt6Letter4" Grid.Row="5" Grid.Column="3" Style="{StaticResource LetterBoxStyle}" />
+        <TextBox x:Name="Attempt6Letter5" Grid.Row="5" Grid.Column="4" Style="{StaticResource LetterBoxStyle}" />
+
+        <StackPanel Grid.Row="6" Grid.ColumnSpan="5" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Label Content="A" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyA" />
+            <Label Content="B" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyB" />
+            <Label Content="C" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyC" />
+            <Label Content="D" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyD" />
+            <Label Content="E" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyE" />
+            <Label Content="F" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyF" />
+            <Label Content="G" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyG" />
+            <Label Content="H" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyH" />
+            <Label Content="I" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyI" />
+            <Label Content="J" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyJ" />
+            <Label Content="K" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyK" />
+            <Label Content="L" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyL" />
+            <Label Content="M" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyM" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="7" Grid.ColumnSpan="5" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Label Content="N" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyN" />
+            <Label Content="O" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyO" />
+            <Label Content="P" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyP" />
+            <Label Content="Q" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyQ" />
+            <Label Content="R" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyR" />
+            <Label Content="S" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyS" />
+            <Label Content="T" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyT" />
+            <Label Content="U" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyU" />
+            <Label Content="V" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyV" />
+            <Label Content="W" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyW" />
+            <Label Content="X" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyX" />
+            <Label Content="Y" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyY" />
+            <Label Content="Z" Style="{StaticResource KeyboardLetterStyle}" x:Name="KeyZ" />
+        </StackPanel>
+
+    </Grid>
+</Window>
