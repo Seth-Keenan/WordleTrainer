@@ -15,21 +15,63 @@ namespace WordleTrainer
         private const int MaxAttempts = 6;
         private const int WordLength = 5;
         private WordleGridManager gridManager;
+        private string filepath = null;
 
         public MainWindow()
         {
             InitializeComponent();
             gridManager = new WordleGridManager(WordleGrid, this);
+
+            // Handles different word themes or word difficulty
+            //SetCustomFilePath("C:\\Users\\sethj\\Documents\\test.csv.txt");
+            
+            
             InitializeGame();
+            ExplainGame();
         }
+
+        private void ExplainGame()
+        {
+            MessageBox.Show("The goal is to guess the 5-letter word in 6 attempts.\n" +
+                            "After each guess:\n" +
+                            "- Green: Correct letter in the correct position\n" +
+                            "- Yellow: Correct letter in the wrong position\n" +
+                            "- Gray: Letter not in the word");
+        }
+
+        private void SelectTargetWord()
+        {
+            if (string.IsNullOrEmpty(filepath))
+            {
+                targetWord = WordSelector.GetRandomWord(WordLength).ToUpper();
+            }
+            else
+            {
+                targetWord = WordSelector.GetRandomWordFromFile(filepath, WordLength);
+
+                if (targetWord == "error")
+                {
+                    targetWord = WordSelector.GetRandomWord(WordLength).ToUpper();
+                }
+                else
+                {
+                    targetWord = targetWord.ToUpper();
+                }
+            }
+        }
+
+        public void SetCustomFilePath(string path)
+        {
+            filepath = path;
+        }
+
 
         private void InitializeGame()
         {
             gridManager.CreateInitialGrid();
             WireTextBoxEventHandlers();
             SetupCurrentInputBoxes();
-            targetWord = WordSelector.GetRandomWord();
-            targetWord = targetWord.ToUpper();
+            SelectTargetWord();
         }
 
         private void WireTextBoxEventHandlers()
@@ -66,13 +108,11 @@ namespace WordleTrainer
 
             if (!currentTextBox.IsFocused) return;
 
-            // Convert input to uppercase
             string text = currentTextBox.Text;
             if (!string.IsNullOrEmpty(text))
             {
                 currentTextBox.Text = text.ToUpper();
 
-                // Prevent cursor from going to start
                 currentTextBox.SelectionStart = currentTextBox.Text.Length;
 
                 if (currentTextBox.Text.Length == 1)
@@ -143,6 +183,7 @@ namespace WordleTrainer
 
         private void ProcessGuess()
         {
+            // Negative Test 1
             if (currentInputBoxes.Length != WordLength)
             {
                 MessageBox.Show($"Please enter a {WordLength}-letter word.");
@@ -168,6 +209,7 @@ namespace WordleTrainer
             bool won = currentGuess == targetWord;
             bool gameOver = won || currentAttempt >= MaxAttempts;
 
+            // Tests
             if (gameOver)
             {
                 EndGame(won);
@@ -181,6 +223,7 @@ namespace WordleTrainer
 
         private void DisplayGuessResult(string guess, int attempt)
         {
+            // Negative Test 2
             if (attempt < 1 || attempt > MaxAttempts || guess.Length != WordLength)
             {
                 return;
@@ -223,21 +266,18 @@ namespace WordleTrainer
 
                 if (keyLabel != null)
                 {
-                    // If the letter is in the correct position, mark it LightGreen
                     if (i < targetWord.Length && targetWord[i] == letter)
                     {
                         keyLabel.Background = Brushes.LightGreen;
                         keyLabel.Foreground = Brushes.Black;
                     }
-                    // If the letter is in the word but wrong position, mark it yellow
-                    // (only if it's not already LightGreen)
+            
                     else if (targetWord.Contains(letter) && keyLabel.Background != Brushes.LightGreen)
                     {
                         keyLabel.Background = Brushes.Yellow;
                         keyLabel.Foreground = Brushes.Black;
                     }
-                    // If the letter is not in the word, mark it gray
-                    // (only if it's not already LightGreen or yellow)
+
                     else if (keyLabel.Background != Brushes.LightGreen && keyLabel.Background != Brushes.Yellow)
                     {
                         keyLabel.Background = Brushes.Gray;
@@ -261,13 +301,11 @@ namespace WordleTrainer
             ResetKeyboard();
             WireTextBoxEventHandlers();
             SetupCurrentInputBoxes();
-            targetWord = WordSelector.GetRandomWord();
-            targetWord = targetWord.ToUpper();
+            SelectTargetWord();
         }
 
         private void ResetKeyboard()
         {
-            // Reset all keyboard letter labels to their default style
             for (char c = 'A'; c <= 'Z'; c++)
             {
                 string keyName = $"Key{c}";

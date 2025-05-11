@@ -20,13 +20,11 @@ namespace WordleTrainer
             wordleGrid = grid;
             mainWindow = window;
 
-            // Initialize the keyboard controls dictionary
-            InitializeKeyboardControls();
+          InitializeKeyboardControls();
         }
 
         private void InitializeKeyboardControls()
         {
-            // Add all keyboard letters to our dictionary
             for (char c = 'A'; c <= 'Z'; c++)
             {
                 string keyName = $"Key{c}";
@@ -46,7 +44,6 @@ namespace WordleTrainer
                 wordleGrid.Children.Remove(tb);
             }
 
-            // Remove only the grid controls from our dictionary
             var keysToRemove = nameToControlMap.Keys
                 .Where(k => k.StartsWith("Attempt") && k.Contains("Letter"))
                 .ToList();
@@ -74,7 +71,6 @@ namespace WordleTrainer
                     Grid.SetColumn(newTextBox, col);
                     wordleGrid.Children.Add(newTextBox);
 
-                    // Register the control in our dictionary
                     nameToControlMap[elementName] = newTextBox;
                 }
             }
@@ -97,7 +93,6 @@ namespace WordleTrainer
                 }
                 else
                 {
-                    // Handle the case where the control is not found or is not a TextBox
                     rowTextBoxes[i] = null;
                 }
             }
@@ -116,7 +111,7 @@ namespace WordleTrainer
             }
             else
             {
-                return; // Cannot convert if TextBoxes are not found or incomplete
+                return;
             }
 
             for (int col = 0; col < WordLength; col++)
@@ -141,7 +136,6 @@ namespace WordleTrainer
                     wordleGrid.Children.Remove(oldTextBox);
                     wordleGrid.Children.Add(newLabel);
 
-                    // Update our dictionary
                     nameToControlMap[elementName] = newLabel;
                 }
             }
@@ -155,7 +149,6 @@ namespace WordleTrainer
                 wordleGrid.Children.Remove(tb);
             }
 
-            // Only clear the grid-related controls, not keyboard controls
             var keysToRemove = nameToControlMap.Keys
                 .Where(k => k.StartsWith("Attempt") && k.Contains("Letter"))
                 .ToList();
@@ -168,7 +161,6 @@ namespace WordleTrainer
             CreateInitialGrid();
         }
 
-        // Add a method to find a control by name in our dictionary
         public Control FindName(string name)
         {
             nameToControlMap.TryGetValue(name, out Control control);
